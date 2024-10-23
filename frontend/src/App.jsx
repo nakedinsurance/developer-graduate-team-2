@@ -9,10 +9,9 @@ import InventoryManagement from './pages/InventoryManagement';
 function App() {
   return (
     <div>
-      <Header />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/product/:id" element={<ProductDetails />} />
+        <Route path="/"  index element={<Checkout/>} />
+       
         <Route path="/inventory" element={<InventoryManagement />} />
       </Routes>
     </div>
