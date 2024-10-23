@@ -327,3 +327,34 @@ VALUES
 ('3476d82a-8b0b-4019-8d4f-e125458847b2', '4c5f7286-923d-4b59-a64b-4cecbf145400', 'cbowman@example.org', 'hashed_password34', 'customer'),
 ('3586f05f-f6ae-4e34-abb0-4932b4f582a1', '8e44845d-e683-47f2-8617-66314a1be0e1', 'vhatfield@example.com', 'hashed_password35', 'customer'),
 ('369db77a-df91-40ea-91fc-7bcbe2760b02', 'cbe3187f-6988-45fb-b713-12d7032695bb', 'michaelabaxter@example.org', 'hashed_password36', 'customer');
+
+
+-- Insert dummy orders with generated UUIDs
+INSERT INTO orders (orderId, customerId, totalPrice, orderStatus, orderDate)
+VALUES
+-- Order for customer 'cdad3ffd-f5d6-488e-b76f-a92a151b7c72'
+('11111111-1111-1111-1111-111111111111', 'cdad3ffd-f5d6-488e-b76f-a92a151b7c72', 53498.00, 'completed', CURRENT_TIMESTAMP),
+
+-- Order for customer '0fbb07a7-8454-487d-861f-04af55dbea0b'
+('22222222-2222-2222-2222-222222222222', '0fbb07a7-8454-487d-861f-04af55dbea0b', 39998.00, 'completed', CURRENT_TIMESTAMP),
+
+-- Order for customer 'e1dde6d3-f41d-4b38-ac0a-1da3e9929aaf'
+('33333333-3333-3333-3333-333333333333', 'e1dde6d3-f41d-4b38-ac0a-1da3e9929aaf', 31498.00, 'pending', CURRENT_TIMESTAMP);
+
+
+
+
+-- Insert order items linked to products
+INSERT INTO order_items (orderItemId, orderId, productId, quantity, priceAtPurchase)
+VALUES
+-- Order 1 (for customer 'cdad3ffd-f5d6-488e-b76f-a92a151b7c72'): iPhone 14 Pro Max and Samsung Galaxy S23 Ultra
+('aaaa1111-aaaa-aaaa-aaaa-aaaaaaaaaaaa', '11111111-1111-1111-1111-111111111111', 'f966934e-883e-4c6f-ab34-aeeeb764ccc7', 1, 27999),
+('bbbb1111-bbbb-1111-bbbb-111111111111', '11111111-1111-1111-1111-111111111111', 'c82f9ef5-6ab0-4b54-885b-7963f00b6144', 1, 25499),
+
+-- Order 2 (for customer '0fbb07a7-8454-487d-861f-04af55dbea0b'): Google Pixel 7 Pro and Huawei P50 Pro
+('aaaa2222-aaaa-2222-aaaa-222222222222', '22222222-2222-2222-2222-222222222222', 'd37b5201-e2b1-4565-a221-dde51a15775c', 1, 20999),
+('bbbb2222-bbbb-2222-bbbb-222222222222', '22222222-2222-2222-2222-222222222222', 'a60ff54e-216f-4f94-86b0-7d00692ca069', 1, 18999),
+
+-- Order 3 (for customer 'e1dde6d3-f41d-4b38-ac0a-1da3e9929aaf'): OnePlus 11 and Xiaomi 12 Pro
+('aaaa3333-aaaa-3333-aaaa-333333333333', '33333333-3333-3333-3333-333333333333', 'dcb0ff20-2473-4da3-bd1a-135c65593992', 1, 16499),
+('bbbb3333-bbbb-3333-bbbb-333333333333', '33333333-3333-3333-3333-333333333333', 'b6d25500-85f7-4521-833a-106180feee2d', 1, 14999);
