@@ -359,10 +359,12 @@ const removeFromCart = (productId) => {
         {products.map((product) => (
           <div key={product.productid} style={styles.productCard}>
             <div style={styles.cardHeader}>
+
               <h2 style={styles.cardTitle}>{product.name}</h2>
               <p style={styles.cardDescription}>{product.description}</p>
             </div>
             <div style={styles.cardContent}>
+                <img style={{width: "100px"}} src="Laptop.jpg"/>
               <div style={styles.priceContainer}>
                 <span style={styles.price}>{formatPrice(product.price)}</span>
                 <span style={styles.stock}>Stock: {product.stock}</span>
