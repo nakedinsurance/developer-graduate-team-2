@@ -6,7 +6,6 @@ import password_icon from '../Assets/lock.png';
 const LoginSignup = () => {
     const [action, setAction] = useState("Register");
 
- 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [gender, setGender] = useState('');
@@ -31,7 +30,7 @@ const LoginSignup = () => {
                 setMessage("You are not logged in.");
             }
         } else {
-            // Register the user
+            
             setSignedInUser({ firstName, lastName, gender, age, email, password });
             setMessage("Successfully registered! You can now log in.");
             

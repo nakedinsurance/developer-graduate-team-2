@@ -2,8 +2,8 @@
 
 ## 1. Developer Information
 
-- **Developer Name**: [Enter your name here]
-- **Team**: [Enter your team name here]
+- **Developer Name**: [Mologad]
+- **Team**: [Team 2]
 
 ## 2. Component Description
 
