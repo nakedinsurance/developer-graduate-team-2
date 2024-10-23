@@ -312,7 +312,7 @@ const removeFromCart = (productId) => {
             },
             body: JSON.stringify({ customerId: v4() , products : cart  }),
         });
-    
+        console.log(response)
         if (!response.ok) {
           throw new Error("Failed to a checkout");
         }
