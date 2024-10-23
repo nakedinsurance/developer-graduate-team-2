@@ -1,0 +1,36 @@
+1. Add Product
+Function: addProduct(productDetails)
+Use: Adds a new product to the inventory. The productDetails parameter should include all necessary information (e.g., name, description, price, quantity, image URL, category, etc.).
+2. Update Product
+Function: updateProduct(productId, updatedDetails)
+Use: Updates the information of an existing product in the inventory using the specified productId. The updatedDetails parameter should contain the fields that need to be updated.
+3. Delete Product
+Function: deleteProduct(productId)
+Use: Removes a product from the inventory by its unique productId.
+4. Get Product by ID
+Function: getProductById(productId)
+Use: Retrieves the details of a specific product using its productId.
+5. Get All Products
+Function: getAllProducts(queryParams)
+Use: Fetches a list of all products in the inventory. The queryParams can include filters (e.g., category, price range) and pagination options.
+6. Search Products
+Function: searchProducts(searchTerm)
+Use: Searches for products based on a search term (e.g., product name or description) and returns relevant results.
+7. Update Stock Quantity
+Function: updateStockQuantity(productId, quantityChange)
+Use: Updates the stock quantity of a specific product by the specified quantityChange (positive for adding stock, negative for reducing it).
+8. Get Low Stock Products
+Function: getLowStockProducts(threshold)
+Use: Retrieves a list of products that are below a specified stock threshold, helping to identify items that need restocking.
+9. Get Product Categories
+Function: getProductCategories()
+Use: Retrieves a list of all product categories available in the inventory for filtering purposes.
+10. Generate Inventory Report
+Function: generateInventoryReport()
+Use: Creates a report summarizing the inventory status, including total products, categories, stock levels, and any discrepancies.
+11. Audit Inventory
+Function: auditInventory(auditDetails)
+Use: Records an audit of the inventory, including details like discrepancies found during manual checks and any adjustments made.
+12. Restore Deleted Product
+Function: restoreProduct(productId)
+Use: Restores a previously deleted product from the inventory (if soft deletion is implemented).
