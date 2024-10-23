@@ -358,3 +358,17 @@ VALUES
 -- Order 3 (for customer 'e1dde6d3-f41d-4b38-ac0a-1da3e9929aaf'): OnePlus 11 and Xiaomi 12 Pro
 ('aaaa3333-aaaa-3333-aaaa-333333333333', '33333333-3333-3333-3333-333333333333', 'dcb0ff20-2473-4da3-bd1a-135c65593992', 1, 16499),
 ('bbbb3333-bbbb-3333-bbbb-333333333333', '33333333-3333-3333-3333-333333333333', 'b6d25500-85f7-4521-833a-106180feee2d', 1, 14999);
+
+-- Used to generate random UUIDs for the wishlist items
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+INSERT INTO wishlist (wishlistId, customerId, productId, dateAdded)
+VALUES
+-- Customer 'cdad3ffd-f5d6-488e-b76f-a92a151b7c72' adds iPhone 14 Pro Max to their wishlist
+(uuid_generate_v4(), 'cdad3ffd-f5d6-488e-b76f-a92a151b7c72', 'f966934e-883e-4c6f-ab34-aeeeb764ccc7', CURRENT_TIMESTAMP),
+
+-- Customer '0fbb07a7-8454-487d-861f-04af55dbea0b' adds Samsung Galaxy S23 Ultra and Canon EOS R5 to their wishlist
+(uuid_generate_v4(), '0fbb07a7-8454-487d-861f-04af55dbea0b', 'c82f9ef5-6ab0-4b54-885b-7963f00b6144', CURRENT_TIMESTAMP),
+(uuid_generate_v4(), '0fbb07a7-8454-487d-861f-04af55dbea0b', 'e2a9566b-c986-4ac9-bab8-60ea58e401ea', CURRENT_TIMESTAMP);
+
+
