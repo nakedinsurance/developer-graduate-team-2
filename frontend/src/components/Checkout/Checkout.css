@@ -1,0 +1,14 @@
+.quantityControl {
+    display : flex;
+    align-items: center;
+}
+
+.btn  {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+}
+
+.addBtn {
+
+}
