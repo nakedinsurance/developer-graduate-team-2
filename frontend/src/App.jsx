@@ -2,7 +2,7 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import ProductDetails from './pages/ProductDetails';
-import SearchEngine from './pages/SearchEngine';
+//import InsuranceDetails from './pages/InsuranceDetails';
 import Header from './components/Header';
 
 function App() {
