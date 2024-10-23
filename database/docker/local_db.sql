@@ -239,3 +239,53 @@ INSERT INTO customer_product (customerId, productId) VALUES
 ('8e44845d-e683-47f2-8617-66314a1be0e1', '11e98d0f-c3ef-452a-b0d1-9147fc876c00'),
 ('8e44845d-e683-47f2-8617-66314a1be0e1', 'a60ff54e-216f-4f94-86b0-7d00692ca069'),
 ('cbe3187f-6988-45fb-b713-12d7032695bb', '04baafd4-cf54-4808-be3b-811f0ffd5470');
+
+CREATE TABLE wishlist (
+    wishlistId UUID PRIMARY KEY,  -- Unique ID for each wishlist
+    customerId UUID,  -- Foreign key to the customer
+    productId UUID,  -- Foreign key to the product
+    dateAdded TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (customerId) REFERENCES customer(customerId),
+    FOREIGN KEY (productId) REFERENCES product(productId)
+);
+
+
+CREATE TABLE orders (
+    orderId UUID PRIMARY KEY,  -- Unique ID for each order
+    customerId UUID,  -- Foreign key to the customer
+    totalPrice FLOAT,
+    orderStatus VARCHAR(50),  -- Example: 'pending', 'completed', 'canceled'
+    orderDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (customerId) REFERENCES customer(customerId)
+);
+
+
+CREATE TABLE order_items (
+    orderItemId UUID PRIMARY KEY,  -- Unique ID for each order item
+    orderId UUID,  -- Foreign key to the orders table
+    productId UUID,  -- Foreign key to the product table
+    quantity INT,
+    priceAtPurchase FLOAT,  -- Price at the time of purchase
+    FOREIGN KEY (orderId) REFERENCES orders(orderId),
+    FOREIGN KEY (productId) REFERENCES product(productId)
+);
+
+CREATE TABLE user_auth (
+    userId UUID PRIMARY KEY,  -- Unique ID for the user
+    customerId UUID,  -- Foreign key to the customer
+    email VARCHAR(255) UNIQUE,  -- Unique email for login
+    password_hash VARCHAR(255),  -- Password hash for security
+    role VARCHAR(50) DEFAULT 'customer',  -- Role can be 'customer', 'admin', etc.
+    FOREIGN KEY (customerId) REFERENCES customer(customerId)
+);
+
+
+CREATE TABLE product_recommendations (
+    recommendationId UUID PRIMARY KEY,  -- Unique ID for each recommendation
+    customerId UUID,  -- Foreign key to the customer
+    productId UUID,  -- Foreign key to the product
+    recommendationDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (customerId) REFERENCES customer(customerId),
+    FOREIGN KEY (productId) REFERENCES product(productId)
+);
+
