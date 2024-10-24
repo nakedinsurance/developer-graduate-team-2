@@ -13,7 +13,7 @@ function App() {
     <div>
       <Routes>
         <Route path="/"  index element={<ElectronicsStore/>} />
-        <Route path='/wishlist' element = {<Wishlist customerId={"cdad3ffd-f5d6-488e-b76f-a92a151b7c72"}/>}></Route>
+  
         
         <Route path='/wishlist' element = {<Wishlist customerId={"cdad3ffd-f5d6-488e-b76f-a92a151b7c72"}/>}></Route>
          <Route path="/search" element={<SearchEngine />} />
