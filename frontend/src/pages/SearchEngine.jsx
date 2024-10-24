@@ -46,7 +46,7 @@ function SearchEngine() {
 
   const loadRecommendations = async (type, id = null) => {
     try {
-      let url = 'http://localhost:3000/api/products/recommendations/';
+      let url = 'http://localhost:4280/api/products/recommendations/';
       switch(type) {
         case 'popular':
           url += 'popular';
