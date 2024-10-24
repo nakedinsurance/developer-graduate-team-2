@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import './LoginSignup.css';
 import email_icon from '../Assets/email.png';
 import password_icon from '../Assets/lock.png';
-
+// State variables for form inputs and messages
 const LoginSignup = () => {
-    const [action, setAction] = useState("Register");
+    const [action, setAction] = useState("Register"); // Determines whether to show login or registration form
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [gender, setGender] = useState('');
@@ -13,9 +13,10 @@ const LoginSignup = () => {
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
     const [signedInUser, setSignedInUser] = useState(null);
-
+    // Function to handle form submission
     const handleSubmit = () => {
         if (action === "Login") {
+            // Check if the entered email and password match the signed-in user
             if (signedInUser && signedInUser.email === email && signedInUser.password === password) {
                 setMessage("Welcome to Naked Cloth!");
             } else if (signedInUser && (signedInUser.email !== email || signedInUser.password !== password)) {
@@ -155,4 +156,4 @@ const LoginSignup = () => {
     );
 };
 
-export default LoginSignup;
+export default LoginSignup; // Export the component for use in other parts of the application

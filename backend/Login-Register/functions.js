@@ -34,9 +34,8 @@ app.post('/register', async (req, res) => {
             [name, email, age, gender]
         );
 
-        const customerId = customerResult.rows[0].customerid;
-
-        
+        const customerId = customerResult.rows[0].customerid;  // Get the first user from the result
+       
         const newUser = await pool.query(
             'INSERT INTO users (customerId, email, password, role) VALUES ($1, $2, $3, $4) RETURNING *',
             [customerId, email, hashedPassword, 'customer']
