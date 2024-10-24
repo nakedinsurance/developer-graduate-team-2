@@ -183,22 +183,6 @@ app.get('/api/inventory-report', (req, res) => {
       });
   });
 
-app.get('/api/wishlist/:customerId', (req, res) => {
-  const customerId = req.params.customerId;
-
-  db.any('SELECT p.name, p.description, p.price FROM wishlist w JOIN product p ON w.productId = p.productId WHERE w.customerId = $1', [customerId])
-    .then((wishlist) => {
-      if (wishlist.length === 0) {
-        return res.status(404).json({ message: 'No wishlist items found for this customer' });
-      }
-      res.status(200).json(wishlist);
-    })
-    .catch((error) => {
-      console.error('ERROR:', error);
-      res.status(500).json({ error: 'Failed to retrieve wishlist' });
-    });
-});
-
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
