@@ -1,0 +1,114 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; 
+    height: 100vh; 
+    width: 100vw; 
+    background: #aeaeae; /* Gray background for the whole page */
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; 
+    width: 500%; 
+    max-width: 700px; /* Ensure form inputs don't stretch too wide */
+    background: #fff; /* White background for the form container */
+    padding: 20px; /* Add some padding for better spacing */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Optional: adds a shadow effect */
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 9px;
+    width: 100%;
+}
+
+.text {
+    color: #009d25;
+    font-size: 30px; 
+    font-weight: 700;
+}
+
+.underline {
+    width: 61px;
+    height: 3px;
+    background: #009d25;
+    border-radius: 9px;
+}
+
+.inputs {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    width: 80%;
+}
+
+.input {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 60px;
+    background: #eaeaea;
+    border-radius: 6px;
+    padding: 0 15px; /* Add padding for better spacing */
+}
+
+.input img {
+    margin-right: 15px;
+    width: 24px; 
+    height: 24px;
+}
+
+.input input,
+.input select {
+    height: 50px;
+    width: 100%; 
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #797979;
+    font-size: 17px;
+    border-radius: 6px;
+}
+
+.submit-container {
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    gap: 30px;  
+    margin-top: 40px;
+}
+
+.submit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 54px;
+    color: #fff;
+    background: #26a138;
+    border-radius: 50px;
+    font-size: 17px; 
+    font-weight: 700;
+    cursor: pointer;
+}
+
+
+.click-here {
+    text-decoration: underline; 
+    cursor: pointer; 
+    color: #5326a1;
+}
+
+.message {
+    margin-top: 10px;
+    color: #797979;
+    font-size: 16px;  
+}
