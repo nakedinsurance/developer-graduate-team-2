@@ -27,7 +27,7 @@ function SearchEngine() {
     try {
       setIsLoading(true);
       // Update this URL to match your API endpoint
-      const response = await fetch('http://localhost:3000/api/products');
+      const response = await fetch('http://localhost:4280/api/products');
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
