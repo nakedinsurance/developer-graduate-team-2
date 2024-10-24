@@ -239,7 +239,7 @@ function SearchEngine() {
               <h3>{product.name}</h3>
               <div className="category">{product.category}</div>
               <div className="price">
-                ${parseFloat(product.price).toFixed(2)}
+                R{parseFloat(product.price).toFixed(2)}
               </div>
               <div className="description">
                 {product.description.substring(0, 100)}...
