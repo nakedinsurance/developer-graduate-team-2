@@ -36,7 +36,7 @@ const InventoryManagement = () => {
 
   const fetchAllProducts = async () => {
     try {
-      const response = await fetch('http://localhost:3000/api/products');
+      const response = await fetch('http://localhost:4280/api/products');
       const data = await response.json();
       setAllProducts(data);
       setFilteredProducts(data);
@@ -47,7 +47,7 @@ const InventoryManagement = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await fetch('http://localhost:3000/api/products/categories');
+      const response = await fetch('http://localhost:4280/api/products/categories');
       const data = await response.json();
       setCategories(data);
     } catch (error) {
@@ -57,7 +57,7 @@ const InventoryManagement = () => {
 
   const fetchInventoryReport = async () => {
     try {
-      const response = await fetch('http://localhost:3000/api/inventory-report');
+      const response = await fetch('http://localhost:4280/api/inventory-report');
       const data = await response.json();
       setInventoryReport(data);
     } catch (error) {
@@ -99,7 +99,7 @@ const InventoryManagement = () => {
 
   const handleUpdate = async (product) => {
     try {
-      await fetch(`http://localhost:3000/api/products/${product.productid}`, {
+      await fetch(`http://localhost:4280/api/products/${product.productid}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(product),
@@ -114,7 +114,7 @@ const InventoryManagement = () => {
 
   const handleAdd = async () => {
     try {
-      await fetch('http://localhost:3000/api/products', {
+      await fetch('http://localhost:4280/api/products', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newProduct),
