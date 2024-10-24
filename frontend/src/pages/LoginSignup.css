@@ -1,11 +1,24 @@
 .container {
     display: flex;
     flex-direction: column;
-    margin: auto;
-    margin-top: 90px;
-    width: 600px;
-    background: #ffffff;
-    padding-bottom: 30px;
+    justify-content: center;
+    align-items: center; 
+    height: 100vh; 
+    width: 100vw; 
+    background: #faf3f369; /* Gray background for the whole page */
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; 
+    width: 500%; 
+    max-width: 700px; /* Ensure form inputs don't stretch too wide */
+    background: #fff; /* White background for the form container */
+    padding: 20px; /* Add some padding for better spacing */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Optional: adds a shadow effect */
 }
 
 .header {
@@ -14,7 +27,6 @@
     align-items: center;
     gap: 9px;
     width: 100%;
-    margin-top: 20px;
 }
 
 .text {
@@ -31,24 +43,25 @@
 }
 
 .inputs {
-    margin-top: 45px;
+    margin-top: 30px;
     display: flex;
     flex-direction: column;
     gap: 25px;
+    width: 80%;
 }
 
 .input {
     display: flex;
     align-items: center;
-    margin: auto;
-    width: 480px;
+    width: 100%;
     height: 60px;
     background: #eaeaea;
     border-radius: 6px;
+    padding: 0 15px; /* Add padding for better spacing */
 }
 
 .input img {
-    margin: 0px 30px;
+    margin-right: 15px;
     width: 24px; 
     height: 24px;
 }
@@ -61,25 +74,8 @@
     border: none;
     outline: none;
     color: #797979;
-    font-size: 17px; 
-    border-radius: 6px; 
-}
-
-.input select {
-    appearance: none; 
-}
-
-.forgot-password {
-    padding-left: 62px;
-    margin-top: 27px;
-    color: #797979;
-    font-size: 18px;  
-}
-
-.forgot-password span {
-    color: #073ccb; 
-    cursor: pointer;
-    text-decoration: underline; 
+    font-size: 17px;
+    border-radius: 6px;
 }
 
 .submit-container {
@@ -87,7 +83,7 @@
     flex-direction: column; 
     align-items: center; 
     gap: 30px;  
-    margin: 60px auto;
+    margin-top: 40px;
 }
 
 .submit {
@@ -104,12 +100,15 @@
     cursor: pointer;
 }
 
-.gray {
-    background: #EAEAEA;
-    color: #676767;
-}
 
 .click-here {
     text-decoration: underline; 
     cursor: pointer; 
+    color: #5326a1;
+}
+
+.message {
+    margin-top: 10px;
+    color: #797979;
+    font-size: 16px;  
 }
