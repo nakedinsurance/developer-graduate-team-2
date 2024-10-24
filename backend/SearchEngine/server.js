@@ -2,16 +2,13 @@
 const express = require('express');
 const cors = require('cors');
 const { Pool } = require('pg');
-const path = require('path');
 
-// Initialize Express
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(cors());
 app.use(express.json());
-app.use(express.static('public'));
 
 // Database connection
 const pool = new Pool({
@@ -21,24 +18,6 @@ const pool = new Pool({
     password: 'postgres',
     port: 5432,
 });
-
-// Test database connection
-pool.query('SELECT NOW()', (err, res) => {
-    if (err) {
-        console.error('Error connecting to the database:', err);
-    } else {
-        console.log('Connected to database successfully');
-    }
-});
-
-// Utility function for recommendations
-function calculateSimilarity(productA, productB) {
-    const categoryMatch = productA.category === productB.category ? 1 : 0;
-    const priceRange = Math.abs(productA.price - productB.price) / Math.max(productA.price, productB.price);
-    return (categoryMatch * 0.7) + ((1 - priceRange) * 0.3);
-}
-
-// Routes
 
 // Get all products
 app.get('/api/products', async (req, res) => {
@@ -62,83 +41,7 @@ app.get('/api/products', async (req, res) => {
     }
 });
 
-// Get personal recommendations based on purchase history and similarity
-app.get('/api/products/recommendations/personal/:customerId', async (req, res) => {
-    try {
-        const { customerId } = req.params;
-        
-        // Get customer's purchase history
-        const purchaseHistory = await pool.query(`
-            SELECT 
-                p.productid,
-                p.name,
-                p.category,
-                p.price,
-                p.description
-            FROM product p
-            JOIN customer_product cp ON p.productid = cp.productid
-            WHERE cp.customerid = $1
-        `, [customerId]);
-
-        // If no purchase history, return popular products
-        if (purchaseHistory.rows.length === 0) {
-            const popularProducts = await pool.query(`
-                SELECT 
-                    p.productid,
-                    p.name,
-                    p.category,
-                    p.price,
-                    p.description,
-                    COUNT(cp.customerid) as purchase_count
-                FROM product p
-                LEFT JOIN customer_product cp ON p.productid = cp.productid
-                GROUP BY p.productid, p.name, p.category, p.price, p.description
-                ORDER BY purchase_count DESC
-                LIMIT 5
-            `);
-            return res.json(popularProducts.rows);
-        }
-
-        // Get products not yet purchased by the customer
-        const allProducts = await pool.query(`
-            SELECT 
-                productid, 
-                name, 
-                category, 
-                price, 
-                description 
-            FROM product
-            WHERE productid NOT IN (
-                SELECT productid 
-                FROM customer_product 
-                WHERE customerid = $1
-            )
-        `, [customerId]);
-
-        // Calculate recommendations based on similarity
-        const recommendations = allProducts.rows.map(product => {
-            const similarityScore = purchaseHistory.rows.reduce((score, historicProduct) => {
-                return score + calculateSimilarity(product, historicProduct);
-            }, 0) / purchaseHistory.rows.length;
-
-            return {
-                ...product,
-                similarityScore
-            };
-        });
-
-        // Return top 5 recommendations sorted by similarity
-        res.json(recommendations
-            .sort((a, b) => b.similarityScore - a.similarityScore)
-            .slice(0, 5));
-
-    } catch (error) {
-        console.error('Error getting recommendations:', error);
-        res.status(500).json({ error: 'Error getting recommendations' });
-    }
-});
-
-// Get popular products based on purchase count
+// Get popular products (based on purchase count)
 app.get('/api/products/recommendations/popular', async (req, res) => {
     try {
         const query = `
@@ -146,12 +49,19 @@ app.get('/api/products/recommendations/popular', async (req, res) => {
                 p.productid,
                 p.name,
                 p.category,
-                p.price,
                 p.description,
+                p.price,
+                p.stock,
                 COUNT(cp.customerid) as purchase_count
             FROM product p
             LEFT JOIN customer_product cp ON p.productid = cp.productid
-            GROUP BY p.productid, p.name, p.category, p.price, p.description
+            GROUP BY 
+                p.productid, 
+                p.name, 
+                p.category, 
+                p.description,
+                p.price,
+                p.stock
             ORDER BY purchase_count DESC
             LIMIT 5
         `;
@@ -164,41 +74,70 @@ app.get('/api/products/recommendations/popular', async (req, res) => {
     }
 });
 
-// Get products by category with popularity data
-app.get('/api/products/category/:category', async (req, res) => {
+// Get personalized recommendations
+app.get('/api/products/recommendations/personal/:customerId', async (req, res) => {
     try {
-        const { category } = req.params;
-        const query = `
+        const { customerId } = req.params;
+
+        // First, get categories this customer usually buys from
+        const categoryQuery = `
+            SELECT 
+                p.category,
+                COUNT(*) as category_count
+            FROM customer_product cp
+            JOIN product p ON cp.productid = p.productid
+            WHERE cp.customerid = $1
+            GROUP BY p.category
+            ORDER BY category_count DESC
+            LIMIT 2
+        `;
+
+        const categoryResult = await pool.query(categoryQuery, [customerId]);
+        
+        if (categoryResult.rows.length === 0) {
+            // If no purchase history, return popular products
+            return res.redirect('/api/products/recommendations/popular');
+        }
+
+        // Get preferred categories
+        const preferredCategories = categoryResult.rows.map(row => row.category);
+
+        // Get recommendations based on preferred categories
+        const recommendationsQuery = `
             SELECT 
                 p.productid,
                 p.name,
                 p.category,
-                p.price,
                 p.description,
-                p.stock,
-                COUNT(cp.customerid) as purchase_count
+                p.price,
+                p.stock
             FROM product p
-            LEFT JOIN customer_product cp ON p.productid = cp.productid
-            WHERE p.category = $1
-            GROUP BY p.productid, p.name, p.category, p.price, p.description, p.stock
-            ORDER BY purchase_count DESC
+            WHERE 
+                p.category = ANY($1::text[])
+                AND p.productid NOT IN (
+                    SELECT productid 
+                    FROM customer_product 
+                    WHERE customerid = $2
+                )
+            ORDER BY 
+                CASE 
+                    WHEN p.category = $3 THEN 0 
+                    ELSE 1 
+                END,
+                p.price DESC
+            LIMIT 5
         `;
-        
-        const result = await pool.query(query, [category]);
+
+        const result = await pool.query(
+            recommendationsQuery, 
+            [preferredCategories, customerId, preferredCategories[0]]
+        );
+
         res.json(result.rows);
     } catch (error) {
-        console.error('Error fetching products by category:', error);
-        res.status(500).json({ error: 'Internal server error' });
+        console.error('Error getting personalized recommendations:', error);
+        res.status(500).json({ error: 'Error getting recommendations' });
     }
-});
-
-// Error handling middleware
-app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).json({ 
-        error: 'Something broke!',
-        message: process.env.NODE_ENV === 'development' ? err.message : 'Internal server error'
-    });
 });
 
 // Start server
