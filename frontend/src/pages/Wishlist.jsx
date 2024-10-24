@@ -10,7 +10,7 @@ const Wishlist = ({ customerId }) => {
   useEffect(() => {
     const fetchWishlist = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/api/wishlist/${customerId}`);
+        const response = await axios.get(`http://localhost:4280/api/wishlist/${customerId}`);
         setWishlist(response.data);
         setLoading(false); // Stop loading once data is fetched
       } catch (err) {
